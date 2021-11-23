@@ -1,0 +1,69 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Sidebar 06</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{% static 'Viewsidebar/css/style.css' %}">
+  </head>
+  <body>
+
+		<div class="container d-flex align-items-stretch">
+			<nav id="sidebar" class="img" style="background-image: url({% static 'Viewsidebar/images/bg_1.jpg' %});">
+				<div class="p-4">
+		  		<h1><a href="index.html" class="logo">Travel <span>Travel Agency</span></a></h1>
+	        <ul class="list-unstyled components mb-5">
+
+            {% for mb in Box %}
+            {% if forloop.counter|add:"-1" == currBox %}
+            <li class="active"><a href="/mailBox/{{forloop.counter|add:"-1"}}/0">{{mb}}</a></li>
+            {% else %}
+            <li><a href="/mailBox/{{forloop.counter|add:"-1"}}/0">{{mb}}</a></li>
+            {% endif %}
+            {% endfor %}
+
+	        </ul>
+
+	      </div>
+    	</nav>
+
+        <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5 pt-5">
+        <button type="button" class="btn btn-primary" onclick="document.location='/composeMail'">Compose Mail</button>
+        <button type="button" class="btn btn-danger" onclick="document.location='/logout'">Logout</button>
+        <ul>
+        {%for key,values in Sub.items%}
+        <li><a href="/openmail/{{currBox}}/{{values}}">{{key.0}} &nbsp &nbsp {{key.1}}</a></li>
+        {% endfor %}
+      </ul>
+
+      <div class="btn-group" role="group" aria-label="Basic example" >
+        {% if currPage > 0%}
+          <button class="btn btn-secondary" onclick="document.location='/mailBox/{{currBox}}/{{currPage|add:"-1"}}'">Prev</button>
+        {% else %}
+          <button class="btn btn-secondary" disabled>Prev</button>
+        {% endif %}
+        {%if currPage < Totpage%}
+        <button class="btn btn-secondary" onclick="document.location='/mailBox/{{currBox}}/{{currPage|add:"1"}}'">Next</button>
+      {% else %}
+        <button class="btn btn-secondary" disabled>Next</button>
+        {% endif %}
+
+      </div>
+
+
+  </div>
+
+		</div>
+
+    <script src="{% static 'Viewsidebar/js/jquery.min.js' %}"></script>
+    <script src="{% static 'Viewsidebar/js/popper.js' %}"></script>
+    <script src="{% static 'Viewsidebar/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'Viewsidebar/js/main.js' %}"></script>
+  </body>
+</html>

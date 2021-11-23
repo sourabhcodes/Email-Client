@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  <meta charset="UTF-8">
+
+<link rel="apple-touch-icon" type="image/png" href="https://static.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
+<meta name="apple-mobile-web-app-title" content="CodePen">
+
+<link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+
+<link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+
+
+  <title>Mail Box</title>
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+body {
+  margin-top: 50px;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  color: #39464e;
+}
+
+.navbar-default {
+  background-color: #FFF;
+  margin-left: 200px;
+}
+
+/*main side bar*/
+.msb {
+  width: 200px;
+  background-color: #F5F7F9;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: auto;
+  min-height: 100%;
+  overflow-y: auto;
+  white-space: nowrap;
+  height: 100%;
+  z-index: 1;
+  border-right: 1px solid #ddd;
+}
+.msb .navbar {
+  border: none;
+  margin-left: 0;
+  background-color: inherit;
+}
+.msb .navbar-header {
+  width: 100%;
+  border-bottom: 1px solid #e7e7e7;
+  margin-bottom: 20px;
+  background: #fff;
+}
+.msb .navbar-nav .panel {
+  border: 0 none;
+  box-shadow: none;
+  margin: 0;
+  background: inherit;
+}
+.msb .navbar-nav li {
+  display: block;
+  width: 100%;
+}
+.msb .navbar-nav li a {
+  padding: 15px;
+  color: #5f5f5f;
+}
+.msb .navbar-nav li a .glyphicon, .msb .navbar-nav li a .fa {
+  margin-right: 8px;
+}
+.msb .nb {
+  padding-top: 5px;
+  padding-left: 10px;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+ul.nv,
+ul.ns {
+  position: relative;
+  padding: 0;
+  list-style: none;
+}
+
+.nv {
+  /*ns: nav-sub*/
+}
+.nv li {
+  display: block;
+  position: relative;
+}
+.nv li::before {
+  clear: both;
+  content: "";
+  display: table;
+}
+.nv li a {
+  color: #444;
+  padding: 10px 25px;
+  display: block;
+  vertical-align: middle;
+}
+.nv li a .ic {
+  font-size: 16px;
+  margin-right: 5px;
+  font-weight: 300;
+  display: inline-block;
+}
+.nv .ns li a {
+  padding: 10px 50px;
+}
+
+/*main content wrapper*/
+.mcw {
+  margin-left: 200px;
+  position: relative;
+  min-height: 100%;
+  /*content view*/
+}
+
+/*globals*/
+a,
+a:focus,
+a:hover {
+  text-decoration: none;
+}
+
+.inbox .container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+.inbox ul, .inbox li {
+  margin: 0;
+  padding: 0;
+}
+.inbox ul li {
+  list-style: none;
+}
+.inbox ul li a {
+  display: block;
+  padding: 10px 20px;
+}
+
+.msb, .mnb {
+  -moz-animation: slidein 300ms forwards;
+  -o-animation: slidein 300ms forwards;
+  -webkit-animation: slidein 300ms forwards;
+  animation: slidein 300ms forwards;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.mcw {
+  -moz-animation: bodyslidein 300ms forwards;
+  -o-animation: bodyslidein 300ms forwards;
+  -webkit-animation: bodyslidein 300ms forwards;
+  animation: bodyslidein 300ms forwards;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+body.msb-x .mcw, body.msb-x .mnb {
+  margin-left: 0;
+  -moz-animation: bodyslideout 300ms forwards;
+  -o-animation: bodyslideout 300ms forwards;
+  -webkit-animation: bodyslideout 300ms forwards;
+  animation: bodyslideout 300ms forwards;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+body.msb-x .msb {
+  -moz-animation: slideout 300ms forwards;
+  -o-animation: slideout 300ms forwards;
+  -webkit-animation: slideout 300ms forwards;
+  animation: slideout 300ms forwards;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+/* Slide in animation */
+@-moz-keyframes slidein {
+  0% {
+    left: -200px;
+  }
+  100% {
+    left: 0;
+  }
+}
+@-webkit-keyframes slidein {
+  0% {
+    left: -200px;
+  }
+  100% {
+    left: 0;
+  }
+}
+@keyframes slidein {
+  0% {
+    left: -200px;
+  }
+  100% {
+    left: 0;
+  }
+}
+@-moz-keyframes slideout {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -200px;
+  }
+}
+@-webkit-keyframes slideout {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -200px;
+  }
+}
+@keyframes slideout {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -200px;
+  }
+}
+@-moz-keyframes bodyslidein {
+  0% {
+    left: 0;
+  }
+  100% {
+    margin-left: 200px;
+  }
+}
+@-webkit-keyframes bodyslidein {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: 0;
+  }
+}
+@keyframes bodyslidein {
+  0% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: 200px;
+  }
+}
+@-moz-keyframes bodyslideout {
+  0% {
+    margin-left: 200px;
+  }
+  100% {
+    margin-right: 0;
+  }
+}
+@-webkit-keyframes bodyslideout {
+  0% {
+    margin-left: 200px;
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+@keyframes bodyslideout {
+  0% {
+    margin-left: 200px;
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  bottom: 23px;
+  right: 28px;
+  width: 180px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 214px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 14px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+
+
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+
+</head>
+
+<body translate="no" class="vsc-initialized">
+  <nav class="mnb navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <i class="ic fa fa-bars"></i>
+      </button>
+      <div style="padding: 15px 0;">
+         <a href="#" id="msbo"><i class="ic fa fa-bars"></i></a>
+      </div>
+    </div>
+<div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><button type="submit" form="deletionform" style="background:none;border:none;padding:15px"><i class="fa fa-trash" style="color:red;font-size:1.5em"></i></button></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.session.user_email}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Help</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </li>
+      <li><a href="#"><i class="fa fa-comment-o"></i></a></li>
+      </ul>
+
+      <form class="navbar-form navbar-right" action="/SearchThis" method="post" >
+        {% csrf_token %}
+        <input type="text" class="form-control" placeholder="Search..." name="query">
+        <button type="submit" name="button">submit</button>
+      </form>
+
+</div>
+  </div>
+</nav>
+<!--msb: main sidebar-->
+<div class="msb" id="msb">
+		<nav class="navbar navbar-default" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<div class="brand-wrapper">
+					<!-- Brand -->
+					<div class="brand-name-wrapper">
+						<a class="navbar-brand" href="/" style="font-size:0.85em" >
+							{{request.session.user_email}}
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Main Menu -->
+			<div class="side-menu-container">
+				<ul class="nav navbar-nav">
+					<li><a href="/composeMail"><i class="fa fa-paper-plane"></i>Compose Mail</a></li>
+				<!--	<li class="active"><a href="#"><i class="fa fa-puzzle-piece"></i> Components</a></li>
+				-->	<li><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>
+ Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+</div>
+
+<!--main content wrapper-->
+<div class="mcw">
+  <!--navigation here-->
+  <!--main content view-->
+  <div class="cv">
+    <div>
+     <div class="inbox">
+       <div class="inbox-sb">
+
+       </div>
+       <div class="inbox-bx container-fluid">
+         <div class="row">
+           <div class="col-md-2">
+             <ul>
+               <div class="form-popup" id="myForm">
+
+                 <form action="/newbox" class="form-container" method="post">
+                   {% csrf_token %}
+                    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                   <h4>Create New mailbox</h4>
+
+                   <input type="text" placeholder="Enter Folder Name" name="newbox" required>
+
+                   <button type="submit" class="btn">Create</button>
+
+                 </form>
+
+               </div>
+               <li><button class="open-button" onclick="openForm()">Create Box</button></li>
+               {% for mb in Box %}
+               <li><a href="/mailBox/{{forloop.counter|add:"-1"}}/0">{{mb}}</a></li>
+               {% endfor %}
+             </ul>
+
+           </div>
+           <div class="col-md-10">
+             <form class="" action="/deleteMails" method="post" id="deletionform">
+               {% csrf_token %}
+             <table class="table table-stripped">
+               <tbody>
+                 {% for key,values in Sub.items %}
+                 <tr>
+                   <td><input type="checkbox" name="checks" value="{{values}}"></td>
+                   {% if key.3 == True %}
+                  <td><a href="/removeflag/{{values}}"><i class="fa fa-star"></i></td>
+                   {% else %}
+                    <td><a href="/flagthis/{{values}}"><i class="fa fa-star-o"></i></a></td>
+                   {% endif %}
+                   <td><a href="/openmail/{{currBox}}/{{values}}">{{key.1}}</a></td>
+                   <td>{{key.0}}</td>
+                   <td></td>
+                   <td>{{key.2}}</td>
+                 </tr>
+                 {% endfor %}
+              </form>
+          <!--       <tr>
+                   <td><input type="checkbox"></td>
+                   <td><i class="fa fa-star"></i></td>
+                   <td><b>Mozilla</b></td>
+                   <td><b>In celebration of women and girls everywhere</b></td>
+                   <td></td>
+                   <td>Mar 10</td>
+                 </tr>
+                 <tr>
+                   <td><input type="checkbox"></td>
+                   <td><i class="fa fa-star-o"></i></td>
+                   <td>Dan Glenn</td>
+                   <td>[ptcuser-announcements] - PTC/USER Expert Speaker Series Webinar March 9, 2017 11AM (EST)</td>
+                   <td><i class="fa fa-paperclip"></i></td>
+                   <td>Mar 10</td>
+                 </tr>-->
+
+               </tbody>
+             </table>
+           </form>
+
+         </div>
+       </div>
+     </div>
+     <center>
+     <div class="btn-group" role="group" aria-label="Basic example">
+       {% if currPage > 0%}
+         <button class="btn btn-secondary" onclick="document.location='/mailBox/{{currBox}}/{{currPage|add:"-1"}}'">Prev</button>
+       {% else %}
+         <button class="btn btn-secondary" disabled>Prev</button>
+       {% endif %}
+       {%if currPage < Totpage%}
+       <button class="btn btn-secondary" onclick="document.location='/mailBox/{{currBox}}/{{currPage|add:"1"}}'">Next</button>
+     {% else %}
+       <button class="btn btn-secondary" disabled>Next</button>
+       {% endif %}
+</center>
+     </div>
+     </div>
+    </div>
+  </div>
+</div>
+    <script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+      <script id="rendered-js">
+(function () {
+  $('#msbo').on('click', function () {
+    $('body').toggleClass('msb-x');
+  });
+})();
+
+
+
+    </script>
+    <script>
+    function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }
+    </script>
+</body>
+</html>

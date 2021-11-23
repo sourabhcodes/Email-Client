@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Read Mail</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}" />
+
+</head>
+
+<body>
+  <div id="main">
+
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="banner"></div>
+
+    <div >
+      Change Mail Box :
+  <select id = "myList" onchange="location = this.value;">
+        {% for box in boxes %}
+          {% if forloop.counter0 == boxnum %}
+               <option value = "/" selected>{{box}}</option>
+          {% else %}
+                <option value = "/movemail/{{boxnum}}/{{mid}}/{{forloop.counter0}}">{{box}}</option>
+          {% endif %}
+          {% endfor %}
+             </select>
+           </div>
+
+	  <div id="sidebar_container">
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+            <h3>{{name}}</h3>
+            <h4 style="font-size:0.9em">{{fmail}}</h4>
+            <h5>{{date}}</h5>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+      </div>
+      <div id="content">
+        <h1>{{sub}}</h1>
+        <p>{{con|safe}}</p>
+        {% if atlist %}
+        <h6>This Mail contains attachments : </h6>
+          {% for at in atlist%}
+            {{at}} &nbsp
+          {% endfor %}
+          <br><br>
+          <a href="/downloadAttached/{{mid}}">Download all attachments.</a>
+          {% endif %}
+      </div>
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+      <p><a href="/">Home</a> | <a href="/Feedbackform">Contact Us</a></p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Inbox</title>
+  </head>
+  <body>
+
+    <a href="/composeMail">Compose Mail</a>
+    <ul>
+      {% for mb in Box %}
+      <li><a href="/mailBox/{{forloop.counter|add:"-1"}}/0">{{mb}}</a></li>
+      {% endfor %}
+    </ul>
+    <br><br><br>
+    <ul>
+      {%for key,values in Sub.items%}
+      <li><a href="/openmail/{{currBox}}/{{values}}">{{key.0}} &nbsp &nbsp {{key.1}}</a></li>
+      {% endfor %}
+    </ul>
+    {% if currPage > 0%}
+      <a href="/mailBox/{{currBox}}/{{currPage|add:"-1"}}">Prev</a>
+    {% endif %}
+    {%if currPage < Totpage%}
+    <a href="/mailBox/{{currBox}}/{{currPage|add:"1"}}">Next</a>
+    {% endif %}
+
+
+    <!--{{ test | safe }}-->
+  </body>
+</html>
